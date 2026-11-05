@@ -16,6 +16,8 @@ On the frontend, I refreshed the dashboard with a responsive purple and white la
 
 Task cards now render priority as a labeled badge (falling back to Medium if an older backend response omits it). The details modal includes priority. An Edit action toggles an animated panel for status and priority controls, and completed task titles stay visible with a stronger strikethrough treatment.
 
+The task edit panel animates its height and clips overflow during the transition, which also clipped the `react-select` menus. The status and priority menus now render in a high z-index portal attached to `document.body`, so they remain visible while the edit panel is open.
+
 I added API regression tests in `backend/tests/test_tasks.py`, including priority defaults, accepted values, invalid values, and update persistence. I validated the production Compose file with `docker compose ... config -q` and ran the frontend TypeScript check (`npm run typecheck`), which passed after the priority and Dashboard UI changes. I have not yet run the backend test suite or applied the priority migration to the running development database. I could not complete a production frontend build in this environment because Turbopack was blocked while trying to bind a local port. The changes still need an end-to-end check in Docker.
 
 ## What I learned
