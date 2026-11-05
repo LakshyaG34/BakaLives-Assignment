@@ -6,7 +6,7 @@
 * { box-sizing: border-box; }
 html { min-height: 100%; background: #f8f7fb; }
 body { min-height: 100vh; margin: 0; background: #f8f7fb; color: #252139; font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; }
-button, input, textarea, select { font: inherit; }
+button, input, textarea { font: inherit; }
 button { cursor: pointer; }
 ::selection { background: #e9ddff; color: #4c258d; }
 *:focus-visible { outline: 3px solid rgb(139 92 246 / .3); outline-offset: 2px; }
