@@ -11,7 +11,7 @@ def get_task(db: Session, task_id: int) -> Task | None:
     return db.get(Task, task_id)
 
 def create_task(db: Session, payload: TaskCreate) -> Task:
-    task = Task(title=payload.title, description=payload.description)
+    task = Task(title=payload.title, description=payload.description, priority=payload.priority)
     db.add(task)
     db.commit()
     db.refresh(task)

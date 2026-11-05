@@ -3,10 +3,12 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 TaskStatus = Literal["todo", "in_progress", "done"]
+TaskPriority = Literal["low", "medium", "high"]
 
 class TaskCreate(BaseModel):
     title: str = Field(min_length=1, max_length=255)
     description: str | None = None
+    priority: TaskPriority = "medium"
 
     @field_validator("title")
     @classmethod
@@ -20,6 +22,7 @@ class TaskUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=255)
     description: str | None = None
     status: TaskStatus | None = None
+    priority: TaskPriority = "medium"
 
     @field_validator("title")
     @classmethod
@@ -34,5 +37,6 @@ class TaskRead(BaseModel):
     title: str
     description: str | None
     status: TaskStatus
+    priority: TaskPriority
     created_at: datetime
     updated_at: datetime

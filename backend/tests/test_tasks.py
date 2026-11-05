@@ -33,10 +33,11 @@ def test_list_tasks_schema(client):
     data = response.json()
     assert len(data) == 1
     task = data[0]
-    assert set(task.keys()) == {"id", "title", "description", "status", "created_at", "updated_at"}
+    assert set(task.keys()) == {"id", "title", "description", "status", "priority", "created_at", "updated_at"}
     assert task["title"] == "Schema test"
     assert task["description"] == "Checking fields"
     assert task["status"] == "todo"
+    assert task["priority"] == "medium"
 
 
 # --- Get Task (GET /api/tasks/{task_id}) ---
@@ -50,6 +51,7 @@ def test_get_task_success(client):
     assert data["title"] == "Get me"
     assert data["description"] == "Details"
     assert data["status"] == "todo"
+    assert data["priority"] == "medium"
 
 
 def test_get_task_not_found(client):
@@ -72,6 +74,7 @@ def test_create_task_title_only(client):
     assert data["title"] == "Write notes"
     assert data["description"] is None
     assert data["status"] == "todo"
+    assert data["priority"] == "medium"
     assert "id" in data
     assert "created_at" in data
     assert "updated_at" in data
@@ -84,6 +87,19 @@ def test_create_task_with_description(client):
     assert data["title"] == "With desc"
     assert data["description"] == "A detailed task"
     assert data["status"] == "todo"
+    assert data["priority"] == "medium"
+
+
+def test_create_task_with_each_priority(client):
+    for priority in ("low", "medium", "high"):
+        response = client.post("/api/tasks", json={"title": f"{priority} priority", "priority": priority})
+        assert response.status_code == 201
+        assert response.json()["priority"] == priority
+
+
+def test_create_task_rejects_invalid_priority(client):
+    response = client.post("/api/tasks", json={"title": "Invalid priority", "priority": "urgent"})
+    assert response.status_code == 422
 
 
 def test_create_task_strips_whitespace(client):
@@ -180,6 +196,26 @@ def test_update_all_fields(client):
     assert data["title"] == "Complete overhaul"
     assert data["description"] == "Updated desc"
     assert data["status"] == "in_progress"
+
+
+def test_update_priority_persists(client):
+    task_id = client.post("/api/tasks", json={"title": "Change priority"}).json()["id"]
+    response = client.patch(f"/api/tasks/{task_id}", json={"priority": "high"})
+    assert response.status_code == 200
+    assert response.json()["priority"] == "high"
+    assert client.get(f"/api/tasks/{task_id}").json()["priority"] == "high"
+
+
+def test_update_rejects_invalid_priority(client):
+    task_id = client.post("/api/tasks", json={"title": "Invalid priority update"}).json()["id"]
+    response = client.patch(f"/api/tasks/{task_id}", json={"priority": "urgent"})
+    assert response.status_code == 422
+
+
+def test_update_rejects_null_priority(client):
+    task_id = client.post("/api/tasks", json={"title": "Null priority update"}).json()["id"]
+    response = client.patch(f"/api/tasks/{task_id}", json={"priority": None})
+    assert response.status_code == 422
 
 
 def test_update_missing_task_returns_404(client):
