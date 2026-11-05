@@ -8,11 +8,11 @@ TaskFlow is a single-user task dashboard built with FastAPI, Next.js, and Postgr
 
 I fixed the API validation and persistence issues and added regression tests for task creation, updates, deletion, status transitions, and timestamps. I also added a backend source mount in Docker Compose so the container uses the local backend files instead of only the copies baked into its image.
 
-On the frontend, I refreshed the dashboard with a responsive purple and white layout, Tailwind styling, and Framer Motion transitions. I split the screen into Overview, All Tasks, and Create Task modules in the sidebar, moved the form into Create Task, and made status shortcuts open All Tasks with that filter selected. Summary cards and progress indicators use the loaded task data. The task status dropdown now uses `react-select`.
+On the frontend, I refreshed the dashboard with a responsive purple and white layout, Tailwind styling, and Framer Motion transitions. I split the screen into Overview, All Tasks, and Create Task modules in the sidebar, moved the form into Create Task, and made status shortcuts open All Tasks with that filter selected. Summary cards and progress indicators use the loaded task data. The task status dropdown now uses `react-select`. All Tasks now paginates the filtered results in pages of eight, with page numbers, previous/next controls, and a visible item range; changing filters returns to the first page.
 
 ## How I checked the work
 
-I added API regression tests in `backend/tests/test_tasks.py` and ran the frontend TypeScript check (`npm run typecheck`), which passed after the frontend changes. I have not yet run the backend test suite, and I could not complete a production frontend build in this environment because Turbopack was blocked while trying to bind a local port. The changes still need an end-to-end check in Docker.
+I added API regression tests in `backend/tests/test_tasks.py` and ran the frontend TypeScript check (`npm run typecheck`), which passed after the frontend and pagination changes. I have not yet run the backend test suite, and I could not complete a production frontend build in this environment because Turbopack was blocked while trying to bind a local port. The changes still need an end-to-end check in Docker.
 
 ## What I learned
 
