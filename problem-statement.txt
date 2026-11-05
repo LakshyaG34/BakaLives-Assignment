@@ -1,0 +1,115 @@
+# Full-Stack Developer Internship — Technical Assessment
+
+## Project: TaskFlow
+
+**Duration:** 1 day
+**Tech Stack:** FastAPI, Next.js, PostgreSQL, Docker  
+
+### Background
+
+Imagine you've just joined a small development team as a Full-Stack Developer Intern.
+
+The team has been working on **TaskFlow**, a simple web application that helps users manage their daily tasks.
+
+Most of the application has already been built, but it hasn't been properly tested. Some features work as expected, while others have issues that the team hasn't had time to investigate.
+
+Your job is to take a look at the existing application, understand how it works, identify what needs improvement, and make the necessary changes.
+
+We're not going to give you a list of bugs to fix or features to build. Instead, we've collected some feedback from people who have used the application.
+
+It's up to you to figure out what needs to be done.
+
+---
+
+### Feedback From the Team
+
+**Sarah — Product Manager**
+
+- "I was trying out the application, and most things seemed fine at first. But sometimes I'm not sure whether my changes are actually being saved. I've also noticed that when I have a lot of tasks, it's difficult to figure out which ones I should work on first."
+
+**Rahul — QA Tester**
+
+- "I've been testing the application with different inputs and noticed a few things that don't seem right. Sometimes an action appears to work, but the result isn't what I expected. I'd suggest trying different scenarios instead of just checking whether the basic features work."
+
+**Priya — UI/UX Designer**
+
+- "The interface looks fine for a small number of tasks, but I'm not sure how easy it would be to use with 30 or 40 tasks. Finding a particular task could become frustrating. I've also noticed that the application doesn't always give clear feedback when something happens, or when there's nothing to display."
+
+**Amit — Engineering Lead**
+
+- "Before we start adding more features, I'd like you to spend some time understanding what's already there. Check whether things work the way they're supposed to, and fix whatever you think is important.
+- Don't try to do everything. You have limited time, so focus on the issues that matter most. I'd prefer a few properly implemented changes over a bunch of half-finished ones."
+
+---
+
+### Getting Started
+
+We've already set up the project using FastAPI, Next.js, and PostgreSQL, so you don't have to build anything from scratch.
+
+Start by cloning the GitHub repository shared with you.
+
+You'll need Docker installed on your machine. Once you've cloned the repository, open a terminal inside the project folder and run:
+
+```bash
+docker compose up --build
+```
+
+Once everything is running, open the application and spend some time exploring it.
+
+Try creating tasks, updating them, deleting them, and using the available features. You can also look through the code, check API responses, inspect the database, or use whatever debugging tools you're comfortable with.
+
+The idea is to understand the application before making changes.
+
+### What We'd Like You to Do
+
+Based on what you find, decide which issues or improvements are worth working on.
+
+We're interested in seeing how you approach an unfamiliar codebase, especially when nobody is telling you exactly which files to edit or what code to write.
+
+You don't need to fix everything. Focus on making meaningful improvements and making sure your changes work.
+
+### A Few Things to Keep in Mind
+
+You're free to modify the frontend, backend, or database if needed.
+
+You can use Google, Stack Overflow, official documentation, ChatGPT, Claude, Codex, or any other tools that help you.
+
+We don't expect you to know everything already. Looking things up and learning along the way is part of the job.
+
+However, **make sure you understand the code you're submitting**. We may ask you to explain your changes during the final discussion.
+
+### What to Submit
+
+Once you're done, push your changes to a GitHub repository and share the link with us.
+
+Also, create a file named `ENGINEERING_NOTES.md` in your project.
+
+Keep it simple. We just want you to briefly explain:
+
+1. **What did you find?** Were there any bugs, missing features, or things that didn't work as expected?
+2. **What did you work on?** Why did you choose those particular issues?
+3. **How did you fix or improve them?** How did you check that your changes worked?
+4. **What did you learn?** Did you come across anything unfamiliar that you had to research?
+5. **What's left?** If you had another day to work on this project, what would you do next?
+
+There's no need to write a long report. A few clear paragraphs are enough.
+
+### After Submission
+
+We'll have a short discussion about your work.
+
+We'll ask you to walk us through what you found, explain some of your changes, and talk about how you approached the problems.
+
+We might also give you a small additional scenario and ask how you'd handle it.
+
+This isn't about memorizing technical definitions or writing perfect code. We want to see how you think, how you approach problems, and how comfortable you are learning something new.
+
+### One Last Thing
+
+Don't worry about completing every possible improvement within the time limit.
+
+A working solution with a clear explanation of your decisions is much more valuable than adding lots of features that don't work properly.
+
+**We're more interested in how you solve problems than how quickly you write code.**
+
+Good luck!
