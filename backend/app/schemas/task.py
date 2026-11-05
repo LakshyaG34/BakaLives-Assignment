@@ -11,7 +11,10 @@ class TaskCreate(BaseModel):
     @field_validator("title")
     @classmethod
     def normalize_title(cls, value: str) -> str:
-        return value.strip() if value.strip() else value
+        stripped = value.strip()
+        if not stripped:
+            raise ValueError("Title cannot be blank")
+        return stripped
 
 class TaskUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=255)

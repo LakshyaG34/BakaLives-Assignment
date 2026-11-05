@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from app.models import Task
@@ -18,14 +19,12 @@ def create_task(db: Session, payload: TaskCreate) -> Task:
 
 def update_task(db: Session, task: Task, payload: TaskUpdate) -> Task:
     changes = payload.model_dump(exclude_unset=True)
-    next_status = changes.pop("status", None)
     for name, value in changes.items():
         setattr(task, name, value)
+    if changes:
+        task.updated_at = datetime.now(timezone.utc)
     db.commit()
     db.refresh(task)
-    if next_status is not None:
-        task.status = next_status
-        db.expunge(task)
     return task
 
 def delete_task(db: Session, task: Task) -> None:

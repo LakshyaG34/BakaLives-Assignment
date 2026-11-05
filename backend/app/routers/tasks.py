@@ -33,6 +33,7 @@ def update_task(task_id: int, payload: TaskUpdate, db: Db):
 @router.delete("/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_task(task_id: int, db: Db):
     task = task_service.get_task(db, task_id)
-    if task is not None:
-        task_service.delete_task(db, task)
+    if task is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
+    task_service.delete_task(db, task)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

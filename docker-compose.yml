@@ -16,6 +16,8 @@ services:
     build: ./backend
     environment:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-taskflow}:${POSTGRES_PASSWORD:-taskflow_dev_only}@db:5432/${POSTGRES_DB:-taskflow}
+    volumes:
+      - ./backend:/code
     ports:
       - "${BACKEND_PORT:-8000}:8000"
     depends_on:
