@@ -6,9 +6,11 @@ import { TaskForm } from "@/components/TaskForm";
 import { TaskFilters } from "@/components/TaskFilters";
 import { TaskList } from "@/components/TaskList";
 import { api } from "@/lib/api";
+import { taskAlerts } from "@/lib/alerts";
 import type { Filter, Task, TaskStatus } from "@/types/task";
 
 type Module = "overview" | "all_tasks" | "create_task";
+const statusNames: Record<TaskStatus, string> = { todo: "To do", in_progress: "In progress", done: "Completed" };
 type PageSizeOption = { value: number; label: string };
 type DateFilter = "all" | "today" | "last_7_days" | "last_30_days" | "this_month";
 type DateFilterOption = { value: DateFilter; label: string };
@@ -67,8 +69,15 @@ export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const reload = useCallback(async () => { try { setTasks(await api.list()); setError(false); } catch { setError(true); } finally { setLoading(false); } }, []);
   useEffect(() => { void reload(); }, [reload]);
-  async function changeStatus(id: number, status: TaskStatus) { try { const updated = await api.updateStatus(id, status); setTasks(current => current.map(task => task.id === id ? updated : task)); } catch { setError(true); } }
-  async function remove(id: number) { try { await api.remove(id); setTasks(current => current.filter(task => task.id !== id)); } catch { setError(true); } }
+  async function changeStatus(id: number, status: TaskStatus) { try { const updated = await api.updateStatus(id, status); setTasks(current => current.map(task => task.id === id ? updated : task)); await taskAlerts.success("Task updated", `Task status changed to ${statusNames[status]}.`); } catch { setError(true); await taskAlerts.error("Couldn’t update task", "The status change could not be saved. Please try again."); } }
+  async function remove(id: number) {
+    const task = tasks.find(item => item.id === id);
+    if (!task) return;
+    const confirmation = await taskAlerts.confirmDelete(task.title);
+    if (!confirmation.isConfirmed) return;
+    try { await api.remove(id); setTasks(current => current.filter(item => item.id !== id)); await taskAlerts.success("Task deleted", "The task has been removed."); }
+    catch { setError(true); await taskAlerts.error("Couldn’t delete task", "The task could not be deleted. Please try again."); }
+  }
   function navigate(module: Module) { setActiveModule(module); setSidebarOpen(false); if (module === "all_tasks") { setFilter("all"); setSearchTerm(""); setDateFilter("all"); setCurrentPage(1); } }
   function selectStatus(status: Filter) { setFilter(status); setCurrentPage(1); setActiveModule("all_tasks"); setSidebarOpen(false); }
   const now = new Date();
