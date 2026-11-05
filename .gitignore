@@ -9,6 +9,8 @@ wheels/
 # Virtual environments
 .venv
 .env
+/.env.production
+/.env.production.local
 .pytest_cache/
 frontend/node_modules/
 frontend/.next/
